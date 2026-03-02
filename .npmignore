@@ -1,0 +1,24 @@
+# Source files
+src/
+tests/
+tsconfig.json
+vitest.config.ts
+.github/
+
+# Configuration
+.editorconfig
+.prettierrc
+.eslintrc
+
+# Example files for development
+venvy.schema.js
+venvy.schema.ts
+.env*
+example.ts
+
+# Documentation (except README.md)
+CHANGELOG.md (if exists)
+
+# Build artifacts
+dist/
+node_modules/

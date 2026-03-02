@@ -1,0 +1,24 @@
+name: Venvy Validate
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+      - run: npm ci
+      - name: Validate Environment
+        run: npx venvy validate
+        env:
+          # You can add mock secrets here if needed for CI
+          NODE_ENV: test
