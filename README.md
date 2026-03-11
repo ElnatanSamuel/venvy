@@ -2,16 +2,16 @@
 
 ![Venvy Logo](public/white.png)
 
-# 🚀 Venvy
+# Venvy
 
 [![npm version](https://badge.fury.io/js/venvy.svg)](https://www.npmjs.com/package/venvy)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-43853D?logo=node.js&logoColor=white)](https://nodejs.org/)
 
-**🔧 Strict environment variable governance for modern applications**
+**Strict environment variable governance for modern applications**
 
-[📖 Documentation](https://venvydocs.vercel.app/) • [📦 npm Package](https://www.npmjs.com/package/venvy) • [🌐 Website](https://venvydocs.vercel.app/)
+[npm Package](https://www.npmjs.com/package/venvy) • [Website](https://venvydocs.vercel.app/)
 
 ---
 
@@ -19,43 +19,37 @@ Venvy is a professional command-line tool and library designed for **strict envi
 
 </div>
 
-## ✨ Why Venvy?
+## Why Venvy?
 
-Stop letting environment variables cause runtime errors and configuration nightmares! Venvy brings **enterprise-grade environment governance** to your projects with zero configuration overhead.
+Stop letting environment variables cause runtime errors and configuration nightmares. Venvy brings **enterprise-grade environment governance** to your projects with zero configuration overhead.
 
-### 🎯 Core Purpose
+### Core Purpose
 
-- **🛡️ Strict Validation**: Enforce that all required environment variables are present and match defined types at application startup or during CI/CD
-- **⚡ Type Safety**: Automatically infer TypeScript types from your environment schema, ensuring that `process.env` access is safe and predictable
-- **🔄 Cross-Environment Consistency**: Detect missing or extra variables across different environment files (e.g., .env.development vs. .env.production)
-- **🚀 Simplified Onboarding**: Generate .env.example files automatically to help new developers set up their local environments quickly
-- **🚦 CI/CD Integration**: Exit with non-zero codes when validation fails, allowing you to catch configuration errors before they reach production
+- **Strict Validation**: Enforce that all required environment variables are present and match defined types at application startup or during CI/CD
+- **Type Safety**: Automatically infer TypeScript types from your environment schema, ensuring that `process.env` access is safe and predictable
+- **Cross-Environment Consistency**: Detect missing or extra variables across different environment files (e.g., .env.development vs. .env.production)
+- **Simplified Onboarding**: Generate .env.example files automatically to help new developers set up their local environments quickly
+- **CI/CD Integration**: Exit with non-zero codes when validation fails, allowing you to catch configuration errors before they reach production
 
-## 🚀 Features
+## Features
 
-- **📋 Schema-Based Definition**: Define your environment structure using a fluent API that supports strings, numbers, booleans, enums, and URLs
-- **🔍 Advanced Validators**: Built-in support for `email()`, `ip()`, `port()`, and custom `regex()` validation
-- **🎭 Conditional Validation**: Use `requiredIf()` to make variables required only under specific conditions
-- **📚 Automatic Documentation**: Generate and inject environment variable tables directly into your README.md
-- **🪝 Git Hooks**: Automatically set up pre-commit hooks to prevent invalid configurations from being committed
-- **⚡ JIT Schema Loading**: Load `.ts` schema files directly in the CLI without a manual compilation step
-- **🏗️ Project Scaffolding**: Use `init` to automatically generate a schema from your existing `.env` files
-- **🤝 Interactive Sync**: Use `sync` to interactively fill in missing variables in your `.env`
-- **🔗 Zod Integration**: Power Venvy with your existing Zod schemas using the `fromZod` bridge
+- **Schema-Based Definition**: Define your environment structure using a fluent API that supports strings, numbers, booleans, enums, and URLs
+- **Advanced Validators**: Built-in support for `email()`, `ip()`, `port()`, and custom `regex()` validation
+- **Conditional Validation**: Use `requiredIf()` to make variables required only under specific conditions
+- **Automatic Documentation**: Generate and inject environment variable tables directly into your README.md
+- **Git Hooks**: Automatically set up pre-commit hooks to prevent invalid configurations from being committed
+- **JIT Schema Loading**: Load `.ts` schema files directly in the CLI without a manual compilation step
+- **Project Scaffolding**: Use `init` to automatically generate a schema from your existing `.env` files
+- **Interactive Sync**: Use `sync` to interactively fill in missing variables in your `.env`
+- **Zod Integration**: Power Venvy with your existing Zod schemas using the `fromZod` bridge
 
-## 📦 Installation
+## Installation
 
 ```bash
 npm install venvy
 ```
 
-Or get started immediately with npx:
-
-```bash
-npx venvy init
-```
-
-## 🎯 Quick Start
+## Quick Start
 
 ### 1. Define Your Schema
 
@@ -75,7 +69,7 @@ export const env = {
 };
 ```
 
-#### 🎨 Using Zod
+####  Using Zod
 
 If you already use Zod, you can bridge your schema seamlessly:
 
@@ -96,43 +90,43 @@ export const env = defineEnv(fromZod(zodSchema));
 
 Venvy provides a powerful CLI for management and automation.
 
-#### 🚀 Initialize Venvy in an existing project:
+#### Initialize Venvy in an existing project:
 
 ```bash
 npx venvy init
 ```
 
-#### 🤝 Interactively sync missing variables:
+#### Interactively sync missing variables:
 
 ```bash
 npx venvy sync
 ```
 
-#### ✅ Validate the current environment:
+#### Validate the current environment:
 
 ```bash
 npx venvy validate
 ```
 
-#### 🔍 Compare environments:
+#### Compare environments:
 
 ```bash
 npx venvy diff development production
 ```
 
-#### 📚 Inject documentation table into README:
+#### Inject documentation table into README:
 
 ```bash
 npx venvy docs
 ```
 
-#### 📄 Generate .env.example:
+#### Generate .env.example:
 
 ```bash
 npx venvy generate
 ```
 
-#### 🪝 Set up Git pre-commit hook:
+#### Set up Git pre-commit hook:
 
 ```bash
 npx venvy hook
@@ -153,7 +147,7 @@ console.log(env.DB_URL); // Fully typed as string
 console.log(env.PORT);    // Fully typed as number
 ```
 
-## 🏗️ Advanced Usage
+## Advanced Usage
 
 ### Conditional Requirements
 
@@ -198,12 +192,12 @@ Ensure consistency across your environments:
 npx venvy diff staging production
 
 # Output:
-# ❌ Missing in production: DEBUG_MODE
-# ⚠️  Different values: API_RATE_LIMIT (staging: 100, production: 1000)
-# ✅ All other variables match!
+# Missing in production: DEBUG_MODE
+# Different values: API_RATE_LIMIT (staging: 100, production: 1000)
+# All other variables match!
 ```
 
-## 🛠️ Technical Architecture
+## Technical Architecture
 
 Venvy is designed to be **lightweight with minimal dependencies**. It leverages TypeScript's advanced type inference to provide a seamless developer experience without requiring manual type maintenance or complex code generation.
 
@@ -214,7 +208,7 @@ Venvy is designed to be **lightweight with minimal dependencies**. It leverages 
 - **Developer Experience**: Intuitive CLI with helpful error messages
 - **CI/CD Ready**: Built for automated workflows
 
-## 📚 API Reference
+## API Reference
 
 ### Core Validators
 
@@ -237,13 +231,13 @@ Venvy is designed to be **lightweight with minimal dependencies**. It leverages 
 - `.regex(pattern)` - Custom regex validation
 - `.min/max` - Numeric/string constraints
 
-## 🌟 Community & Support
+##  Community & Support
 
-- **📖 [Full Documentation](https://venvydocs.vercel.app/)** - Comprehensive guides and API reference
-- **🐛 [Issue Tracker](https://github.com/ElnatanSamuel/venvy/issues)** - Report bugs and request features
-- **💬 [Discussions](https://github.com/ElnatanSamuel/venvy/discussions)** - Community discussions and Q&A
+- **[Full Documentation](https://venvydocs.vercel.app/)** - Comprehensive guides and API reference
+- **[Issue Tracker](https://github.com/ElnatanSamuel/venvy/issues)** - Report bugs and request features
+- **[Discussions](https://github.com/ElnatanSamuel/venvy/discussions)** - Community discussions and Q&A
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
@@ -256,7 +250,7 @@ npm install
 npm run dev
 ```
 
-## 📄 License
+## License
 
 MIT © [Elnatan Samuel](https://github.com/ElnatanSamuel)
 
@@ -264,7 +258,7 @@ MIT © [Elnatan Samuel](https://github.com/ElnatanSamuel)
 
 <div align="center">
 
-**⭐ Star this repo if Venvy helped you!**
+**Star this repo if Venvy helped you!**
 
 Made with ❤️ by [Elnatan Samuel](https://github.com/ElnatanSamuel)
 
