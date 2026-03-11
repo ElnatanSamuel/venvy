@@ -1,6 +1,6 @@
 {
   "name": "venvy",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Strict environment variable governance for your projects",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
