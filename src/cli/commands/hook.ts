@@ -25,8 +25,5 @@ npx venvy validate
   writeFileSync(preCommitPath, hookContent);
   chmodSync(preCommitPath, "755");
 
-  console.log(
-    "\x1b[32m%s\x1b[0m",
-    "Successfully set up Venvy pre-commit hook! ⚓",
-  );
+  console.log("\x1b[32m%s\x1b[0m", "Successfully set up Venvy pre-commit hook");
 }

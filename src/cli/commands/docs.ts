@@ -55,6 +55,6 @@ export async function docsCommand() {
   writeFileSync(readmePath, readmeContent);
   console.log(
     "\x1b[32m%s\x1b[0m",
-    "Successfully updated README.md with environment variable table! 📖",
+    "Successfully updated README.md with environment variable table",
   );
 }

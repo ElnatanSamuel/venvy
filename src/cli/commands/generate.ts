@@ -24,5 +24,5 @@ export async function generateCommand() {
   }
 
   writeFileSync(examplePath, content);
-  console.log("\x1b[32m%s\x1b[0m", "Successfully generated .env.example! 🚀");
+  console.log("\x1b[32m%s\x1b[0m", "Successfully generated .env.example");
 }

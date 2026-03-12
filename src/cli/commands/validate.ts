@@ -26,7 +26,7 @@ export async function validateCommand(options: { env?: string }) {
   }
 
   if (errors.length > 0) {
-    console.error("\x1b[31m%s\x1b[0m", "Validation Failed:");
+    console.error("\x1b[31m%s\x1b[0m", "Validation failed:");
     errors.forEach((err) => {
       console.error(
         `  - ${err.key}: ${err.message} (received: ${err.received ?? "undefined"})`,
@@ -34,6 +34,6 @@ export async function validateCommand(options: { env?: string }) {
     });
     process.exit(1);
   } else {
-    console.log("\x1b[32m%s\x1b[0m", "Environment is valid! ✨");
+    console.log("\x1b[32m%s\x1b[0m", "Environment is valid");
   }
 }

@@ -19,7 +19,7 @@ export function defineEnv<S extends Schema>(schema: S): InferEnv<S> {
   }
 
   if (errors.length > 0) {
-    console.error("\x1b[31m%s\x1b[0m", "Venvy Validation Failed:");
+    console.error("\x1b[31m%s\x1b[0m", "Validation failed:");
     errors.forEach((err) => {
       console.error(
         `  - ${err.key}: ${err.message} (received: ${err.received ?? "undefined"})`,

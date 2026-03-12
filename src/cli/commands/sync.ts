@@ -29,7 +29,7 @@ export async function syncCommand() {
   if (missingKeys.length === 0) {
     console.log(
       "\x1b[32m%s\x1b[0m",
-      "Everything is in sync! No missing variables found. ✨",
+      "Everything is in sync! No missing variables found.",
     );
     return;
   }
@@ -72,5 +72,5 @@ export async function syncCommand() {
     writeFileSync(envPath, envContent.trim());
   }
 
-  console.log("\x1b[32m%s\x1b[0m", "\nSuccessfully updated .env! 📝");
+  console.log("\x1b[32m%s\x1b[0m", "\nSuccessfully updated .env");
 }

@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+// Silence Node's annoying ESM/CJS reparsing warnings for dynamic TS loading
+process.removeAllListeners("warning");
+
 import { Command } from "commander";
 import { validateCommand } from "./commands/validate.js";
 import { diffCommand } from "./commands/diff.js";

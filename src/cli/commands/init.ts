@@ -50,10 +50,7 @@ export async function initCommand() {
   schemaContent += "};\n";
 
   writeFileSync(schemaPath, schemaContent);
-  console.log(
-    "\x1b[32m%s\x1b[0m",
-    "Successfully initialized venvy.schema.ts! 🚀",
-  );
+  console.log("\x1b[32m%s\x1b[0m", "Successfully initialized venvy.schema.ts");
   console.log("Next steps:");
   console.log("1. Review your schema and add descriptions or default values.");
   console.log("2. Run 'npx venvy validate' to check your environments.");
