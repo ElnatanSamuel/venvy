@@ -4,13 +4,16 @@ import { join } from "path";
 import { loadSchema } from "../../utils/schema-loader.js";
 import { loadEnvFiles } from "../../utils/env.js";
 import { BaseValidator } from "../../core/types.js";
+import { ui } from "../../utils/ui.js";
 
 export async function syncCommand() {
+  ui.header("Sync Environment");
+
   let schema;
   try {
     schema = await loadSchema();
   } catch (err) {
-    console.error("\x1b[31m%s\x1b[0m", (err as Error).message);
+    ui.error((err as Error).message);
     process.exit(1);
   }
 
@@ -27,14 +30,12 @@ export async function syncCommand() {
     .map(([key]) => key);
 
   if (missingKeys.length === 0) {
-    console.log(
-      "\x1b[32m%s\x1b[0m",
-      "Everything is in sync! No missing variables found.",
-    );
+    ui.success("Everything is in sync! No missing variables found.");
+    console.log("");
     return;
   }
 
-  console.log(
+  ui.warn(
     `Found ${missingKeys.length} missing variables. Let's fill them in:\n`,
   );
 
@@ -44,7 +45,7 @@ export async function syncCommand() {
       return {
         type: "input",
         name: key,
-        message: `Value for ${key}${validator._description ? ` (${validator._description})` : ""}:`,
+        message: `${key}${validator._description ? ` ${ui.dim}(${validator._description})${ui.dim}` : ""}:`,
         validate: (input: string) => {
           const result = validator.validate(key, input, {
             ...envData,
@@ -72,5 +73,6 @@ export async function syncCommand() {
     writeFileSync(envPath, envContent.trim());
   }
 
-  console.log("\x1b[32m%s\x1b[0m", "\nSuccessfully updated .env");
+  ui.success("Successfully updated .env");
+  console.log("");
 }

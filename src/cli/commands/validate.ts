@@ -1,18 +1,21 @@
 import { loadEnvFiles } from "../../utils/env.js";
-import { BaseValidator, ValidationError } from "../../core/types.js";
+import { BaseValidator } from "../../core/types.js";
 import { loadSchema } from "../../utils/schema-loader.js";
+import { ui } from "../../utils/ui.js";
 
 export async function validateCommand(options: { env?: string }) {
+  ui.header("Validation");
+
   let schema;
   try {
     schema = await loadSchema();
   } catch (err) {
-    console.error("\x1b[31m%s\x1b[0m", (err as Error).message);
+    ui.error((err as Error).message);
     process.exit(1);
   }
 
   const envData = loadEnvFiles(options.env);
-  const errors: ValidationError[] = [];
+  const errors: any[] = [];
 
   for (const [key, validator] of Object.entries(
     schema as Record<string, BaseValidator<any>>,
@@ -26,14 +29,16 @@ export async function validateCommand(options: { env?: string }) {
   }
 
   if (errors.length > 0) {
-    console.error("\x1b[31m%s\x1b[0m", "Validation failed:");
+    ui.error("Environment check failed!");
     errors.forEach((err) => {
-      console.error(
-        `  - ${err.key}: ${err.message} (received: ${err.received ?? "undefined"})`,
+      console.log(
+        `  ${ui.dim}-${ui.reset} ${err.key}: ${err.message} (received: ${err.received ?? "undefined"})`,
       );
     });
+    console.log("");
     process.exit(1);
   } else {
-    console.log("\x1b[32m%s\x1b[0m", "Environment is valid");
+    ui.success("Environment is sharp! All variables passed validation.");
+    console.log("");
   }
 }

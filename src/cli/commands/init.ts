@@ -1,19 +1,21 @@
 import { writeFileSync, existsSync } from "fs";
 import { join } from "path";
 import { loadEnvFiles } from "../../utils/env.js";
+import { scanCodebase } from "../../utils/scanner.js";
+import { ui } from "../../utils/ui.js";
 
 export async function initCommand() {
+  ui.header("Initialization");
+
   const schemaPath = join(process.cwd(), "venvy.schema.ts");
   if (existsSync(schemaPath)) {
-    console.error(
-      "\x1b[31m%s\x1b[0m",
-      "Error: venvy.schema.ts already exists.",
-    );
+    ui.error("venvy.schema.ts already exists.");
     process.exit(1);
   }
 
+  // 1. Scan .env files
   const envData = loadEnvFiles(undefined, { ignoreProcessEnv: true });
-  const keys = Object.keys(envData).filter(
+  const envKeys = Object.keys(envData).filter(
     (k) =>
       !k.startsWith("npm_") &&
       !k.startsWith("NODE_") &&
@@ -21,19 +23,27 @@ export async function initCommand() {
       !k.startsWith("PATH"),
   );
 
-  if (keys.length === 0) {
-    console.log(
-      "\x1b[33m%s\x1b[0m",
-      "No environment variables found to initialize from. Creating a blank schema.",
+  // 2. Scan codebase
+  ui.success("Scanning codebase for process.env usage...");
+  const codeKeys = Array.from(scanCodebase(process.cwd()));
+
+  // 3. Merge keys
+  const allKeys = Array.from(new Set([...envKeys, ...codeKeys])).sort();
+
+  if (allKeys.length === 0) {
+    ui.warn(
+      "No environment variables found in .env or codebase. Creating a blank schema.",
     );
+  } else {
+    ui.success(`Found ${allKeys.length} unique variables.`);
   }
 
   let schemaContent =
     'import { string, number, boolean, url, enumeration } from "venvy";\n\n';
   schemaContent += "export const env = {\n";
 
-  for (const key of keys) {
-    const value = envData[key];
+  for (const key of allKeys) {
+    const value = envData[key] || "";
     let validator = "string()";
 
     if (value.toLowerCase() === "true" || value.toLowerCase() === "false") {
@@ -50,8 +60,11 @@ export async function initCommand() {
   schemaContent += "};\n";
 
   writeFileSync(schemaPath, schemaContent);
-  console.log("\x1b[32m%s\x1b[0m", "Successfully initialized venvy.schema.ts");
-  console.log("Next steps:");
-  console.log("1. Review your schema and add descriptions or default values.");
-  console.log("2. Run 'npx venvy validate' to check your environments.");
+
+  ui.box(
+    `1. Review your schema and add descriptions or default values.\n2. Run 'npx venvy validate' to check your environments.`,
+    "NEXT STEPS",
+  );
+
+  ui.success(`Successfully initialized venvy.schema.ts`);
 }

@@ -1,5 +1,6 @@
 import { writeFileSync, chmodSync, existsSync, mkdirSync } from "fs";
 import { join } from "path";
+import { ui } from "../../utils/ui.js";
 
 export function hookCommand() {
   const gitDir = join(process.cwd(), ".git");
@@ -25,5 +26,6 @@ npx venvy validate
   writeFileSync(preCommitPath, hookContent);
   chmodSync(preCommitPath, "755");
 
-  console.log("\x1b[32m%s\x1b[0m", "Successfully set up Venvy pre-commit hook");
+  ui.success("Successfully set up Venvy pre-commit hook");
+  console.log("");
 }

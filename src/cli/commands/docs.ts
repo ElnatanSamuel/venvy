@@ -1,6 +1,7 @@
 import { readFileSync, writeFileSync, existsSync } from "fs";
 import { join } from "path";
 import { loadSchema } from "../../utils/schema-loader.js";
+import { ui } from "../../utils/ui.js";
 
 export async function docsCommand() {
   let schema;
@@ -53,8 +54,6 @@ export async function docsCommand() {
   }
 
   writeFileSync(readmePath, readmeContent);
-  console.log(
-    "\x1b[32m%s\x1b[0m",
-    "Successfully updated README.md with environment variable table",
-  );
+  ui.success("Successfully updated README.md with environment table");
+  console.log("");
 }
