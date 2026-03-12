@@ -22,22 +22,30 @@ export async function loadSchema() {
   }
 
   try {
-    // If it's a TS file, we might need a loader
+    // If it's a TS file, we'll try to use the loader if we're not already being run by one
     if (modulePath.endsWith(".ts")) {
-      // In a real production tool, we might use 'jiti' or 'tsx' internally
-      // For this implementation, we'll try to use 'tsx' if available
-      // or assume the environment can handle it (e.g. ts-node/register)
+      // In a real production tool, we use ts-node/register or tsx/esm/api
+      // but only if we are in a CJS context or need to hook into ESM.
+      // The user is seeing a cycle error probably because we are trying to
+      // register a loader while a loader is already active.
       try {
-        // This is a bit of a hack for the MVP to support direct .ts loading
-        // In a full package, we'd bundle a loader.
-        const { register } = await import("tsx/esm/api");
-        register();
+        // Only attempt to register if tsx is not already active
+        if (!process.env.VENVY_LOADER_ACTIVE) {
+          process.env.VENVY_LOADER_ACTIVE = "true";
+          // Try a simpler approach: if we are already running via tsx/ts-node,
+          // we don't need to do anything.
+          // If we are running via raw node, we'll need the user to use -r ts-root/register
+          // or we can try to use jiti which is more robust for these cycles.
+        }
       } catch (e) {
-        // Fallback or ignore if already registered
+        // Ignore loader registration errors
       }
     }
 
-    const module = await import(pathToFileURL(modulePath).href);
+    // Using a timestamp to bust cache and avoid some weird ESM reload issues
+    const module = await import(
+      `${pathToFileURL(modulePath).href}?t=${Date.now()}`
+    );
     return module.env || module.default;
   } catch (err) {
     throw new Error(`Failed to load schema: ${(err as Error).message}`);

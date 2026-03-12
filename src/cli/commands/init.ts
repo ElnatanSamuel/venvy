@@ -12,9 +12,13 @@ export async function initCommand() {
     process.exit(1);
   }
 
-  const envData = loadEnvFiles();
+  const envData = loadEnvFiles(undefined, { ignoreProcessEnv: true });
   const keys = Object.keys(envData).filter(
-    (k) => !k.startsWith("npm_") && !k.startsWith("NODE_"),
+    (k) =>
+      !k.startsWith("npm_") &&
+      !k.startsWith("NODE_") &&
+      !k.startsWith("SHELL") &&
+      !k.startsWith("PATH"),
   );
 
   if (keys.length === 0) {

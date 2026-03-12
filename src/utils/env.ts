@@ -31,7 +31,10 @@ export function parseEnvFile(filePath: string): Record<string, string> {
   return env;
 }
 
-export function loadEnvFiles(envName?: string): Record<string, string> {
+export function loadEnvFiles(
+  envName?: string,
+  options: { ignoreProcessEnv?: boolean } = {},
+): Record<string, string> {
   const baseEnv = parseEnvFile(join(process.cwd(), ".env"));
   const localEnv = parseEnvFile(join(process.cwd(), ".env.local"));
 
@@ -44,6 +47,8 @@ export function loadEnvFiles(envName?: string): Record<string, string> {
     ...baseEnv,
     ...specificEnv,
     ...localEnv,
-    ...(process.env as Record<string, string>),
+    ...(options.ignoreProcessEnv
+      ? {}
+      : (process.env as Record<string, string>)),
   };
 }
